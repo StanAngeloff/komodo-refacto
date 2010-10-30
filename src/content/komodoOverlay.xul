@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE overlay SYSTEM "chrome://refacto/locale/refacto.dtd">
+<?xml-stylesheet href="chrome://refacto/skin/refacto.css" type="text/css" ?>
+<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" xmlns:html="http://www.w3.org/1999/xhtml"
+         id="refacto">
+
+    <script type="application/x-javascript" src="chrome://refacto/content/scripts/refacto.js" />
+    <script type="application/x-javascript" src="chrome://refacto/content/scripts/support.js" />
+
+	<!-- PHP support -->
+	<script type="application/x-javascript" src="chrome://refacto-php/content/define_method.js" />
+
+	<broadcasterset id="broadcasterset_global">
+		<broadcaster id="cmd_refacto_triggerAtPosition"
+					 key="key_cmd_refacto_triggerAtPosition"
+					 desc="&command.triggerAtPosition;"
+					 oncommand="extensions.refacto.Refacto.triggerAtPosition()" />
+	</broadcasterset>
+
+	<menupopup id="editorContextMenu">
+		<menu id="editor_context_refacto_menu"
+			  label="&menu.refacto.label;"
+			  class="menu-iconic refacto-features"
+			  accesskey="&menu.refacto.accessKey;"
+			  insertafter="editor_context_select_menu">
+			<menupopup id="editor_context_refacto_menupopup" />
+		</menu>
+	</menupopup>
+
+	<menupopup id="popup_edit">
+		<menu id="refacto_menu"
+			  label="&menu.refacto.label;"
+			  class="menu-iconic refacto-features"
+			  accesskey="&menu.refacto.accessKey;"
+			  insertafter="edit_menu_select_menu">
+			<menupopup id="refacto_menupopup" />
+		</menu>
+	</menupopup>
+
+    <script type="application/x-javascript">
+	<![CDATA[
+    this.addEventListener('load', function() {
+        extensions.refacto.Refacto();
+		var popups = [
+			{ id: 'editorContextMenu', child: { id: 'editor_context_refacto_menu', popup: 'editor_context_refacto_menupopup' } },
+			{ id: 'popup_edit',        child: { id: 'refacto_menu',                popup: 'refacto_menupopup' } }
+		];
+		for (var i = 0, length = popups.length; i < length; i ++) (function(popup) {
+			document.getElementById(popup.id).addEventListener('popupshowing', function(event) {
+				if (event.target && event.target.id === popup.id) {
+					extensions.refacto.Refacto.triggerAtPosition({
+						parent:  document.getElementById(popup.child.id),
+						element: document.getElementById(popup.child.popup),
+						visible: false
+					});
+				}
+			}, false);
+		})(popups[i]);
+    }, false);
+	]]>
+    </script>
+
+</overlay>

@@ -1,0 +1,3 @@
+<!ENTITY command.triggerAtPosition "Editor: Trigger Refacto at position">
+<!ENTITY menu.refacto.label "Refactor">
+<!ENTITY menu.refacto.accessKey "R">

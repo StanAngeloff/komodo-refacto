@@ -1,0 +1,7 @@
+content   refacto      content/
+content   refacto-php  content/scripts/support/PHP/
+
+locale    refacto  en-US  locale/en-US/
+skin      refacto  classic/1.0  skin/classic/
+
+overlay   chrome://komodo/content/komodo.xul  chrome://refacto/content/komodoOverlay.xul
